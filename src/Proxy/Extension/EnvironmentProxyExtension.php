@@ -15,6 +15,7 @@ use Contentful\Core\Resource\ResourceArray;
 use Contentful\Management\Client;
 use Contentful\Management\Query;
 use Contentful\Management\Resource\Asset;
+use Contentful\Management\Resource\BulkAction;
 use Contentful\Management\Resource\ContentType;
 use Contentful\Management\Resource\ContentTypeSnapshot;
 use Contentful\Management\Resource\EditorInterface;
@@ -285,6 +286,20 @@ trait EnvironmentProxyExtension
         return $this->client->getLocales(
             $this->getSpaceId(),
             $this->getEnvironmentId()
+        );
+    }
+
+    /**
+     * Returns a BulkAction resource.
+     *
+     * @see https://www.contentful.com/developers/docs/references/content-management-api/#/reference/bulk-actions/bulk-action
+     */
+    public function getBulkAction(string $actionId): BulkAction
+    {
+        return $this->client->getBulkAction(
+            $this->getSpaceId(),
+            $this->getEnvironmentId(),
+            $actionId,
         );
     }
 }

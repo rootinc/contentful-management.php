@@ -64,6 +64,7 @@ class ResourceBuilder extends BaseResourceBuilder
             case 'SpaceMembership':
             case 'Upload':
             case 'User':
+            case 'BulkAction':
                 return $data['sys']['type'];
 
             case 'Snapshot':

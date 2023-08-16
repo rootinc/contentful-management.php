@@ -152,6 +152,26 @@ class ApiConfiguration
             'parameters' => ['space', 'webhook'],
             'id' => '',
         ],
+        Resource\BulkAction::class => [
+            'uri' => '/spaces/{space}/environments/{environment}/bulk_actions/actions/{action}',
+            'parameters' => ['space', 'environment'],
+            'id' => 'action',
+        ],
+        Resource\BulkActionPublish::class => [
+            'uri' => '/spaces/{space}/environments/{environment}/bulk_actions/publish',
+            'parameters' => ['space', 'environment'],
+            'id' => '',
+        ],
+        Resource\BulkActionUnpublish::class => [
+            'uri' => '/spaces/{space}/environments/{environment}/bulk_actions/unpublish',
+            'parameters' => ['space', 'environment'],
+            'id' => '',
+        ],
+        Resource\BulkActionValidate::class => [
+            'uri' => '/spaces/{space}/environments/{environment}/bulk_actions/validate',
+            'parameters' => ['space', 'environment'],
+            'id' => '',
+        ],
     ];
 
     /**
@@ -170,6 +190,7 @@ class ApiConfiguration
         'Space' => Resource\Space::class,
         'Upload' => Resource\Upload::class,
         'WebhookDefinition' => Resource\Webhook::class,
+        'BulkAction' => Resource\BulkAction::class,
     ];
 
     /**

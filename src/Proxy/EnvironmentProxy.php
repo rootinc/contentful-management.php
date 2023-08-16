@@ -113,7 +113,7 @@ class EnvironmentProxy
             $parameters['environment'] = $this->environmentId;
         }
 
-        $this->client->create($resource, $resourceId, $parameters);
+        return $this->client->create($resource, $resourceId, $parameters);
     }
 
     /**

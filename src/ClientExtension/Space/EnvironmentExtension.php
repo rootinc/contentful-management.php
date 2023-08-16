@@ -31,6 +31,7 @@ trait EnvironmentExtension
     use Environment\EntryExtension;
     use Environment\ExtensionExtension;
     use Environment\LocaleExtension;
+    use Environment\BulkActionExtension;
 
     /**
      * Returns a proxy to an environment resource.

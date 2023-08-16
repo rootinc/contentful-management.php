@@ -200,7 +200,7 @@ class Client extends BaseClient
         $config = $this->configuration->getConfigFor($resource);
         $uri = $this->requestUriBuilder->build($config, $parameters, $resourceId);
 
-        $this->request($resourceId ? 'PUT' : 'POST', $uri, [
+        return $this->request($resourceId ? 'PUT' : 'POST', $uri, [
             'resource' => $resource,
             'body' => $resource->asRequestBody(),
             'headers' => $resource->getHeadersForCreation(),

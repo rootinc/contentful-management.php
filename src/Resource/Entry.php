@@ -13,6 +13,7 @@ namespace Contentful\Management\Resource;
 
 use Contentful\Core\Api\DateTimeImmutable;
 use Contentful\Core\Resource\EntryInterface;
+use Contentful\Management\LinkWithVersion;
 use Contentful\Management\Proxy\Extension\EntryProxyExtension;
 use Contentful\Management\Resource\Behavior\ArchivableTrait;
 use Contentful\Management\Resource\Behavior\CreatableInterface;
@@ -243,5 +244,21 @@ class Entry extends BaseResource implements EntryInterface, CreatableInterface
     private function extractFieldName(string $name): string
     {
         return \lcfirst(\mb_substr($name, 3));
+    }
+
+    /**
+     * @return int
+     */
+    public function getVersion(): int
+    {
+        return  $this->getSystemProperties()->getVersion();
+    }
+
+    /**
+     * @return LinkWithVersion
+     */
+    public function asLinkWithVersion(): LinkWithVersion
+    {
+        return new LinkWithVersion($this->getId(), $this->getType(), $this->getVersion());
     }
 }

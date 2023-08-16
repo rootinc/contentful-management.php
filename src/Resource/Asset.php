@@ -110,7 +110,7 @@ class Asset extends BaseResource implements AssetInterface, CreatableInterface
             : \array_keys($this->file);
 
         foreach ($locales as $locale) {
-            $this->client->requestWithResource($this, 'PUT', '/files/'.$locale.'/process', [
+            $this->client->requestWithResource($this, 'PUT', '/files/' . $locale . '/process', [
                 'headers' => ['X-Contentful-Version' => $this->sys->getVersion()],
             ]);
         }
@@ -217,5 +217,21 @@ class Asset extends BaseResource implements AssetInterface, CreatableInterface
     public function getFiles(): array
     {
         return $this->file;
+    }
+
+    /**
+     * @return int
+     */
+    public function getVersion(): int
+    {
+        return  $this->getSystemProperties()->getVersion();
+    }
+
+    /**
+     * @return LinkWithVersion
+     */
+    public function asLinkWithVersion(): LinkWithVersion
+    {
+        return new LinkWithVersion($this->getId(), $this->getType(), $this->getVersion());
     }
 }
