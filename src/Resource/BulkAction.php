@@ -81,4 +81,9 @@ class BulkAction extends BaseResource
   {
     return $this->action;
   }
+
+  public function getStatus(): string
+  {
+    return $this->getSystemProperties()->getStatus();
+  }
 }
