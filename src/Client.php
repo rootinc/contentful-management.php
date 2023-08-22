@@ -19,6 +19,7 @@ use Contentful\Core\Resource\ResourceInterface as CoreResourceInterface;
 use Contentful\Management\Exception\RateWaitTooLongException;
 use Contentful\Management\Resource\Behavior\CreatableInterface;
 use Contentful\Management\Resource\ResourceInterface;
+use Contentful\Management\Resource\ResourceReferences;
 use GuzzleHttp\Exception\RequestException;
 
 /**
@@ -158,12 +159,26 @@ class Client extends BaseClient
             $resource = $this->builder->build($response, $resource);
         }
 
-        if ($resource) {
-            // If it's not an instance of ResourceInterface,
-            // it's an instance of ResourceArray
-            foreach ($resource instanceof ResourceArray ? $resource : [$resource] as $resourceObject) {
+        // If it's not an instance of ResourceInterface,
+        // it's an instance of ResourceArray or ResourceReferences
+        if ($resource && $resource instanceof ResourceArray) {
+            foreach ($resource as $resourceObject) {
+                /**
+                 * NOTE: setClient does exist as a method on each resource object.
+                 * Each resource object coming from the resource array will be
+                 * built from a class extending \Contentful\Management\Resource\BaseResource
+                 */
                 $resourceObject->setClient($this);
             }
+        } else if ($resource && $resource instanceof ResourceReferences) {
+            foreach ($resource as $includesObject) {
+                $includesObject->setClient($this);
+            }
+            foreach ($resource->getItems() as $itemObject) {
+                $itemObject->setClient($this);
+            }
+        } else if ($resource) {
+            $resource->setClient($this);
         }
 
         return $resource;
@@ -233,7 +248,7 @@ class Client extends BaseClient
             'resource' => $resource,
         ]);
 
-        $resp = $this->request($method, $uri.$path, $options);
+        $resp = $this->request($method, $uri . $path, $options);
         if ($method === "GET") {
             return $resp;
         }
@@ -298,7 +313,7 @@ class Client extends BaseClient
      */
     protected function getExceptionNamespace()
     {
-        return __NAMESPACE__.'\\Exception';
+        return __NAMESPACE__ . '\\Exception';
     }
 
     /**

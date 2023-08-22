@@ -11,8 +11,9 @@ use Contentful\Core\Resource\SystemPropertiesInterface;
 /**
  * A ResourceReferences holds the response of an API request
  * that reports the items referencing a resource, typically an entry or asset.
+ * @implements \IteratorAggregate<int, \Contentful\Management\Resource\Entry|\Contentful\Management\Resource\Asset>
  */
-class ResourceReferences extends BaseResource
+class ResourceReferences extends BaseResource implements \Countable, \ArrayAccess, \IteratorAggregate
 {
     /**
      * @var array
@@ -25,12 +26,18 @@ class ResourceReferences extends BaseResource
     private $includes;
 
     /**
+     * @var array
+     */
+    private $flatIncludes;
+
+    /**
      * ResourceReferences constructor.
      */
     public function __construct(array $items, array $includes)
     {
         $this->items = $items;
         $this->includes = $includes;
+        $this->flatIncludes = array_merge(...array_values($includes));
     }
 
     /**
@@ -105,5 +112,53 @@ class ResourceReferences extends BaseResource
             'items' => $this->items,
             'includes' => $this->includes,
         ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function count(): int
+    {
+        return \count($this->flatIncludes);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getIterator(): \ArrayIterator
+    {
+        return new \ArrayIterator($this->flatIncludes);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function offsetExists($offset): bool
+    {
+        return isset($this->flatIncludes[$offset]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function offsetGet($offset): ResourceInterface
+    {
+        return $this->flatIncludes[$offset];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function offsetSet($offset, $value): void
+    {
+        throw new \BadMethodCallException(sprintf('"%s" is read-only.', __CLASS__));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function offsetUnset($offset): void
+    {
+        throw new \BadMethodCallException(sprintf('"%s" is read-only.', __CLASS__));
     }
 }
