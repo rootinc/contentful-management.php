@@ -20,6 +20,7 @@ use Contentful\Management\Resource\Behavior\DeletableTrait;
 use Contentful\Management\Resource\Behavior\PublishableTrait;
 use Contentful\Management\Resource\Behavior\UpdatableTrait;
 use Contentful\Management\SystemProperties\Asset as SystemProperties;
+use Contentful\Management\LinkWithVersion;
 
 /**
  * Asset class.
