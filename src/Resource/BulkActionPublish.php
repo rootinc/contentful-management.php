@@ -57,4 +57,12 @@ class BulkActionPublish extends BulkAction implements CreatableInterface
     {
         return [];
     }
+
+    /**
+     * @return LinkWithVersion[]
+     */
+    public function getItems(): array
+    {
+        return parent::getItems();
+    }
 }
