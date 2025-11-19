@@ -1,0 +1,14 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: contentful-management.php 
+  description: PHP SDK for Contentful's Content Management API. 
+  annotations:
+    github.com/project-slug: contentful/contentful-management.php 
+    contentful.com/service-tier: "4"
+  tags:
+    - tier-4
+spec:
+  type: library 
+  lifecycle: production
+  owner: group:team-developer-experience

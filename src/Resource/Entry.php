@@ -3,7 +3,7 @@
 /**
  * This file is part of the contentful/contentful-management package.
  *
- * @copyright 2015-2023 Contentful GmbH
+ * @copyright 2015-2025 Contentful GmbH
  * @license   MIT
  */
 
@@ -67,9 +67,6 @@ class Entry extends BaseResource implements EntryInterface, CreatableInterface
         return $this->sys;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function jsonSerialize(): array
     {
         $fields = [];
@@ -88,9 +85,6 @@ class Entry extends BaseResource implements EntryInterface, CreatableInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function asUriParameters(): array
     {
         return [
@@ -100,33 +94,21 @@ class Entry extends BaseResource implements EntryInterface, CreatableInterface
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getSpaceId(): string
     {
         return $this->sys->getSpace()->getId();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getEnvironmentId(): string
     {
         return $this->sys->getEnvironment()->getId();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     protected function getEntryId(): string
     {
         return $this->sys->getId();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getHeadersForCreation(): array
     {
         return ['X-Contentful-Content-Type' => $this->contentTypeId];
@@ -134,10 +116,6 @@ class Entry extends BaseResource implements EntryInterface, CreatableInterface
 
     /**
      * Formats data for JSON encoding.
-     *
-     * @param mixed $data
-     *
-     * @return mixed
      */
     private function getFormattedData($data)
     {
@@ -179,15 +157,12 @@ class Entry extends BaseResource implements EntryInterface, CreatableInterface
         return $value;
     }
 
-    /**
-     * @return mixed
-     */
     public function getField(string $name, string $locale)
     {
         return $this->fields[$name][$locale] ?? null;
     }
 
-    public function getFields(string $locale = null): array
+    public function getFields(?string $locale = null): array
     {
         if (null === $locale) {
             return $this->fields;
@@ -202,8 +177,6 @@ class Entry extends BaseResource implements EntryInterface, CreatableInterface
     }
 
     /**
-     * @param mixed $value
-     *
      * @return static
      */
     public function setField(string $name, string $locale, $value)
@@ -220,8 +193,6 @@ class Entry extends BaseResource implements EntryInterface, CreatableInterface
     /**
      * Provides simple setX/getX capabilities,
      * without recurring to code generation.
-     *
-     * @return mixed
      */
     public function __call(string $name, array $arguments)
     {
